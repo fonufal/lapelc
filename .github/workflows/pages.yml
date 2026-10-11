@@ -3,16 +3,20 @@ on:
   push:
     branches: [main]
     paths:
-      - site-bundle.zip
-      - .github/workflows/pages.yml
+      - '*.html'
+      - 'assets/**'
+      - '.github/workflows/pages.yml'
   workflow_dispatch:
+
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
+
 concurrency:
   group: lapelc-pages
   cancel-in-progress: true
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -21,30 +25,19 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          persist-credentials: true
-      - name: Extrair arquivos aprovados
+      - name: Preparar arquivos do website
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p _site
-          unzip -oq site-bundle.zip -d _site
+          cp ./*.html _site/
+          cp -a assets _site/
+          touch _site/.nojekyll
           test -f _site/index.html
-          test -f _site/assets/site.css
           test -f _site/eeg.html
           test -f _site/pessoas.html
-          cp -a _site/. .
-          touch .nojekyll
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add '*.html' assets .nojekyll
-          if ! git diff --cached --quiet; then
-            git commit -m "Publicar arquivos HTML e assets LAPELC²"
-            git push origin HEAD:main
-          fi
+          test -f _site/assets/site.css
       - uses: actions/configure-pages@v5
-        with:
-          enablement: true
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
