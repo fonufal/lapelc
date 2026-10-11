@@ -44,7 +44,7 @@ for (const [name,engine] of [['chromium',chromium],['webkit',webkit]]) {
     });
     if(check.lang!=='en')issues.push('lang not en');
     if(check.enText!=='EN'||check.ptText!=='PT')issues.push('language control missing');
-    if(!check.ptTarget.endsWith('/lapelc/'+pt))issues.push('Portuguese counterpart wrong: '+check.ptTarget);
+    if(check.ptTarget!=='/'+pt)issues.push('Portuguese counterpart wrong: '+check.ptTarget);
     if(check.nav.join('|')!==nav.join('|'))issues.push('navigation not translated: '+check.nav);
     if(check.navLinks.some(x=>!Object.values(enRoutes).includes(x)))issues.push('English nav leaves locale');
     if(!check.assetOk||!check.skipOk)issues.push('assets or skip incorrect');
