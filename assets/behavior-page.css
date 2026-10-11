@@ -1,0 +1,7 @@
+/* Elementos temáticos apenas; todas as seções seguem a grade de EEG. */
+.behavior-page .method-hero h1 .accent {display:block;font-size:clamp(30px,5.5vw,64px);white-space:nowrap;letter-spacing:-.055em}
+.behavior-page .hero-art.behavior img {left:0;width:96%;object-position:center;opacity:.80}
+.behavior-page .mini-icon svg {width:36px;height:36px;display:block}
+@media(max-width:600px) {
+  .behavior-page .method-hero h1 .accent {font-size:clamp(27px,7.6vw,38px)}
+}
