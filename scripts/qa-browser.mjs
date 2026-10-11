@@ -65,6 +65,11 @@ try {
       if(arrowCheck.svgCount===0)problems.push('SVG arrows absent');
       if(!arrowCheck.visible)problems.push('SVG arrow with zero-size render');
 
+      if(width<=600 && ['infraestrutura.html','rastreamento-ocular.html','medidas-comportamentais.html'].includes(path)){
+        const heading=await page.locator('.hero h1').evaluate(el=>el.innerText.replace(/\s+/g,' ').trim());
+        const expected={'infraestrutura.html':'Infraestrutura para investigar a linguagem.','rastreamento-ocular.html':'Rastreamento ocular','medidas-comportamentais.html':'Medidas comportamentais'}[path];
+        if(heading!==expected)problems.push('mobile headline words joined or altered: '+JSON.stringify(heading));
+      }
       if(check.portraitOverlaps)problems.push('portrait overlap: ' + check.portraitOverlaps);
       if(check.h1 && (check.h1.x < -2 || check.h1.right>width+2))problems.push('heading beyond viewport');
       if(!check.skip)problems.push('missing skip link');
@@ -184,6 +189,11 @@ try{
     if(width===390){
       for(const path of pages){
         await page.goto(root+'/'+path,{waitUntil:'domcontentloaded',timeout:30000});
+        if(['infraestrutura.html','rastreamento-ocular.html','medidas-comportamentais.html'].includes(path)){
+          const h=await page.locator('.hero h1').evaluate(el=>el.innerText.replace(/\s+/g,' ').trim());
+          const expected={'infraestrutura.html':'Infraestrutura para investigar a linguagem.','rastreamento-ocular.html':'Rastreamento ocular','medidas-comportamentais.html':'Medidas comportamentais'}[path];
+          if(h!==expected)failures.push({browser:'webkit',width,page:path,issue:'mobile heading words joined',heading:h});
+        }
         const gap=await page.evaluate(()=>{
           const hero=document.querySelector('.hero');
           const content=hero?.querySelector('.hero-main .buttons a:last-child')||hero?.querySelector('.hero-main .lead');
