@@ -15,12 +15,16 @@
 .person-rows .people-items .portrait img{margin:0;filter:grayscale(1) contrast(1.05)}
 .person-rows .people-items .portrait::after{content:"";position:absolute;inset:0;background:var(--cyan);opacity:.25;mix-blend-mode:multiply;pointer-events:none}
 
-/* Página Pessoas: a ilustração contém um vestígio de texto na base; ocultá-lo com dissolução inferior. */
-.hero-people .hero-art img{-webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 54%,transparent 76%);mask-image:linear-gradient(to bottom,#000 0%,#000 54%,transparent 76%)}
-
-/* Páginas Pesquisa e Produção: atenuar texto residual embutido nas imagens de abertura. */
+/* Hero de Pesquisa, Pessoas e Produção: recorte superior da imagem para
+   esconder texto incorporado aos arquivos sem atenuar as waves na base. */
 .hero-research .hero-art img,
+.hero-people .hero-art img,
 .hero-production .hero-art img{
-  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 54%,transparent 76%);
-  mask-image:linear-gradient(to bottom,#000 0%,#000 54%,transparent 76%);
+  top:0;
+  object-position:center top;
+  -webkit-mask-image:none;
+  mask-image:none;
 }
+.hero-research .hero-art img{height:130%}
+.hero-people .hero-art img{height:154%}
+.hero-production .hero-art img{height:124%}
