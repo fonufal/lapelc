@@ -48,3 +48,14 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 }
 @media(max-width:600px){.nav{max-height:calc(100dvh - 76px);overflow-y:auto;z-index:40}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* Setas editoriais: SVG monocromático, sem dependência da fonte emoji de Safari. */
+.link-arrow{display:inline-block;width:1em;height:1em;flex:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round;fill:none;vertical-align:-.15em}
+.btn .arrow,.text-link .arrow{display:inline-flex;align-items:center;justify-content:center}
+.btn .arrow .link-arrow,.text-link .arrow .link-arrow{width:1em;height:1em}
+.topic-list .out-link{display:inline-flex;align-items:flex-start;justify-content:center}
+.topic-list .out-link .link-arrow{width:1em;height:1em}
+.method-list .method-meta .link-arrow{width:12px;height:12px;margin-left:5px;vertical-align:-.2em}
+.section-link span .link-arrow,.infra-register-arrow .link-arrow{width:1em;height:1em}
+.infra-device-links a span .link-arrow{width:1.1em;height:1.1em}
+.location .link-arrow{width:1em;height:1em;vertical-align:-.1em;color:var(--cyan-text)}

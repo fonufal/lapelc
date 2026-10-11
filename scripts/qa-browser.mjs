@@ -48,6 +48,18 @@ try {
       const problems = [];
       if(!response || !response.ok())problems.push('HTTP error: ' + response?.status());
       if(check.overflow)problems.push('horizontal overflow: ' + check.scrollWidth + ' > ' + check.viewport);
+      const arrowCheck=await page.evaluate(()=>{
+        const svgs=[...document.querySelectorAll('svg.link-arrow')];
+        return {
+          glyphText:document.body.textContent.includes('↗'),
+          svgCount:svgs.length,
+          visible:svgs.every(svg=>{const r=svg.getBoundingClientRect();return r.width>=8&&r.height>=8;})
+        };
+      });
+      if(arrowCheck.glyphText)problems.push('raw diagonal arrow still rendered as text');
+      if(arrowCheck.svgCount===0)problems.push('SVG arrows absent');
+      if(!arrowCheck.visible)problems.push('SVG arrow with zero-size render');
+
       if(check.portraitOverlaps)problems.push('portrait overlap: ' + check.portraitOverlaps);
       if(check.h1 && (check.h1.x < -2 || check.h1.right>width+2))problems.push('heading beyond viewport');
       if(!check.skip)problems.push('missing skip link');
