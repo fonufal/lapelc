@@ -5,6 +5,8 @@ on:
     paths:
       - '*.html'
       - 'assets/**'
+      - 'i18n/**'
+      - 'scripts/build-english.mjs'
       - 'scripts/qa-browser.mjs'
       - '.github/workflows/qa-browser.yml'
   workflow_dispatch:
@@ -25,6 +27,8 @@ jobs:
         run: |
           npm install --no-save playwright@1.56.1
           npx playwright install --with-deps chromium webkit
+      - name: Gerar páginas em inglês
+        run: node scripts/build-english.mjs
       - name: Iniciar servidor local
         run: |
           python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/lapelc-http.log 2>&1 &

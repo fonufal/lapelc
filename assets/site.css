@@ -67,3 +67,13 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 .section-link span .link-arrow,.infra-register-arrow .link-arrow{width:1em;height:1em}
 .infra-device-links a span .link-arrow{width:1.1em;height:1.1em}
 .location .link-arrow{width:1em;height:1em;vertical-align:-.1em;color:var(--cyan-text)}
+
+/* Language navigation: both states are keyboard-accessible on desktop and mobile. */
+.language{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.language a{color:#075c8d;text-decoration:none;border-bottom:1px solid #2d93c3;padding:3px 2px;line-height:1.2}
+.language a:hover,.language a:focus-visible{color:#002d4c;border-color:#002d4c}
+.language strong{font-weight:700}
+@media(max-width:600px){.language{padding:14px 0}.language a{display:inline-block}}
+/* English headings are longer than their Portuguese equivalents; maintain readable wrapping. */
+html[lang="en"] .hero h1{overflow-wrap:normal;word-break:normal}
+@media(max-width:600px){html[lang="en"] .hero h1{font-size:clamp(37px,10.2vw,62px)}html[lang="en"] .method-hero h1{font-size:clamp(28px,7.4vw,42px)}html[lang="en"] .section-title{overflow-wrap:normal;word-break:normal}}

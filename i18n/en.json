@@ -178,7 +178,7 @@
   "MINISTÉRIO DA CIÊNCIA, TECNOLOGIA E INOVAÇÃO": "MINISTRY OF SCIENCE, TECHNOLOGY AND INNOVATION",
   "Acesso ao cadastro nacional de infraestrutura de pesquisa — registro nº 310.": "National research infrastructure record — registration no. 310.",
   "06 / ACESSO E USO": "06 / ACCESS AND USE",
-  "Acesso e uso": "Access to",
+  "Acesso e uso": "Access and use of",
   "infraestrutura.": "facilities.",
   "A infraestrutura do Lapelc² está disponível para projetos de pesquisa desenvolvidos pelo grupo e em colaboração com pesquisadores externos, mediante alinhamento de objetivos e viabilidade.": "LAPELC²'s facilities can support projects developed by the research group and external collaborators, subject to shared objectives and feasibility.",
   "Colaborações": "Collaborations",
@@ -389,5 +389,6 @@
   "Visitas e colaborações": "Visits and collaborations",
   "Para visitas, estágios ou propostas de colaboração, entre em contato pelo formulário acima.": "For visits, placements, or collaboration proposals, please use the contact form above.",
   "Acesso de pesquisadores": "Access for researchers",
-  "O acesso ao laboratório é realizado mediante agendamento e está sujeito à disponibilidade da equipe.": "Laboratory access is by appointment and subject to staff availability."
+  "O acesso ao laboratório é realizado mediante agendamento e está sujeito à disponibilidade da equipe.": "Laboratory access is by appointment and subject to staff availability.",
+  "da": "the"
 }

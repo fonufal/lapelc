@@ -5,6 +5,8 @@ on:
     paths:
       - '*.html'
       - 'assets/**'
+      - 'i18n/**'
+      - 'scripts/build-english.mjs'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
 
@@ -30,10 +32,15 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p _site
+          node scripts/build-english.mjs
           cp ./*.html _site/
+          cp -a en _site/
           cp -a assets _site/
           touch _site/.nojekyll
           test -f _site/index.html
+          test -f _site/en/index.html
+          test -f _site/en/research.html
+          test -f _site/en/people.html
           test -f _site/eeg.html
           test -f _site/pessoas.html
           test -f _site/assets/site.css

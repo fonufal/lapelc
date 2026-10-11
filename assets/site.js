@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded',()=>{
+ const english=document.documentElement.lang.toLowerCase().startsWith('en');
+ const locale=english?'en':'pt-BR';
  const skip=document.querySelector('.skip-link[href="#conteudo"]');
  if(skip)skip.addEventListener('click',e=>{
   const main=document.getElementById('conteudo');
@@ -14,7 +16,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(!toggle||!nav)return;
   nav.classList.toggle('open',open);
   toggle.setAttribute('aria-expanded',String(open));
-  toggle.setAttribute('aria-label',open?'Fechar menu':'Abrir menu');
+  toggle.setAttribute('aria-label',open?(english?'Close menu':'Fechar menu'):(english?'Open menu':'Abrir menu'));
   toggle.textContent=open?'×':'☰';
  }
  if(toggle&&nav){
@@ -25,20 +27,20 @@ document.addEventListener('DOMContentLoaded',()=>{
  const tabs=[...document.querySelectorAll('[role="tab"][data-tab]')];
  const panels=[...document.querySelectorAll('[role="tabpanel"][data-panel]')];
  const heading=document.getElementById('pub-heading');
- const headers={artigos:'Artigos científicos',livros:'Livros',teses:'Teses e dissertações',dados:'Dados e materiais',apresentacoes:'Apresentações'};
+ const headers=english?{artigos:'Journal articles',livros:'Books',teses:'Theses and dissertations',dados:'Data and materials',apresentacoes:'Presentations'}:{artigos:'Artigos científicos',livros:'Livros',teses:'Teses e dissertações',dados:'Dados e materiais',apresentacoes:'Apresentações'};
  const search=document.getElementById('pub-search'),sort=document.getElementById('pub-sort'),status=document.getElementById('pub-status');
  function filterPanel(){
   if(!search)return;
-  const q=search.value.trim().toLocaleLowerCase('pt-BR');
+  const q=search.value.trim().toLocaleLowerCase(locale);
   const current=panels.find(p=>!p.hidden);
-  panels.forEach(p=>p.querySelectorAll('.pub-item').forEach(li=>{li.hidden=!li.textContent.toLocaleLowerCase('pt-BR').includes(q);}));
-  if(current&&status){const shown=current.querySelectorAll('.pub-item:not([hidden])').length;status.textContent=shown===0?'Nenhum resultado encontrado.':shown===1?'1 registro encontrado.':shown+' registros encontrados.';}
+  panels.forEach(p=>p.querySelectorAll('.pub-item').forEach(li=>{li.hidden=!li.textContent.toLocaleLowerCase(locale).includes(q);}));
+  if(current&&status){const shown=current.querySelectorAll('.pub-item:not([hidden])').length;status.textContent=shown===0?(english?'No results found.':'Nenhum resultado encontrado.'):shown===1?(english?'1 record found.':'1 registro encontrado.'):(shown+(english?' records found.':' registros encontrados.'));}
  }
  function selectTab(tab,focus=false){
   if(!tab)return;
   tabs.forEach(b=>{const selected=b===tab;b.classList.toggle('active',selected);b.setAttribute('aria-selected',String(selected));b.tabIndex=selected?0:-1;});
   panels.forEach(p=>p.hidden=p.dataset.panel!==tab.dataset.tab);
-  if(heading)heading.textContent=headers[tab.dataset.tab]||'Produção';
+  if(heading)heading.textContent=headers[tab.dataset.tab]||(english?'Publications':'Produção');
   if(search)search.value='';
   filterPanel();
   if(focus)tab.focus();
@@ -69,7 +71,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(!form.reportValidity())return;
   const data=new FormData(form);
   const subject=encodeURIComponent('LAPELC² — '+data.get('assunto'));
-  const body=encodeURIComponent('Nome: '+data.get('nome')+'\nE-mail: '+data.get('email')+'\n\n'+data.get('mensagem'));
+  const body=encodeURIComponent((english?'Name: ':'Nome: ')+data.get('nome')+'\n'+(english?'Email: ':'E-mail: ')+data.get('email')+'\n\n'+data.get('mensagem'));
   location.href='mailto:miguel@fale.ufal.br?subject='+subject+'&body='+body;
  });
 });
