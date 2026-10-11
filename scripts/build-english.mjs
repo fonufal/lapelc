@@ -29,6 +29,7 @@ const attrs = {
  'Conhecer nossa pesquisa':'Explore our research',
  'Consultar referência no fonUFAL':'View reference at fonUFAL',
  'Mapa interativo da Faculdade de Letras da UFAL, campus A. C. Simões, Maceió':'Interactive map of the School of Letters, UFAL, A. C. Simões campus, Maceió',
+ 'Versão em português':'Switch to Portuguese',
  'Seu nome':'Your name','seu@email.com':'you@example.com',
  'Escreva sua mensagem aqui...':'Write your message here...',
  'Buscar por título, autor, palavra-chave...':'Search by title, author, or keyword...'

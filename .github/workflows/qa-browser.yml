@@ -39,6 +39,8 @@ jobs:
           exit 1
       - name: Verificar páginas em Chromium e setas em WebKit
         run: node scripts/qa-browser.mjs
+      - name: Validar as dez páginas em inglês (Chromium e WebKit)
+        run: node scripts/qa-english.mjs
       - name: Guardar capturas e relatório de QA
         if: always()
         uses: actions/upload-artifact@v4
