@@ -17,3 +17,10 @@
 
 /* Página Pessoas: a ilustração contém um vestígio de texto na base; ocultá-lo com dissolução inferior. */
 .hero-people .hero-art img{-webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 54%,transparent 76%);mask-image:linear-gradient(to bottom,#000 0%,#000 54%,transparent 76%)}
+
+/* Páginas Pesquisa e Produção: atenuar texto residual embutido nas imagens de abertura. */
+.hero-research .hero-art img,
+.hero-production .hero-art img{
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 54%,transparent 76%);
+  mask-image:linear-gradient(to bottom,#000 0%,#000 54%,transparent 76%);
+}
