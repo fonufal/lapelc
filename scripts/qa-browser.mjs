@@ -1,4 +1,4 @@
-import { chromium } from 'playwright';
+import { chromium, webkit } from 'playwright';
 import { mkdir, writeFile } from 'node:fs/promises';
 
 const pages = ['index.html', 'laboratorio.html', 'pesquisa.html', 'infraestrutura.html', 'eeg.html', 'rastreamento-ocular.html', 'medidas-comportamentais.html', 'pessoas.html', 'producao.html', 'contato.html'];
@@ -86,6 +86,27 @@ try {
           if(await toggle.getAttribute('aria-expanded')!=='false')problems.push('menu did not close with Escape');
         }
       } else if(!await page.locator('.nav').isVisible()) problems.push('desktop navigation hidden');
+      if(['index.html','pesquisa.html'].includes(path)){
+        const methodLinks=await page.locator('.method-list a').evaluateAll(links=>links.map(a=>{
+          const r=a.getBoundingClientRect();
+          const arrow=a.querySelector('svg.link-arrow');
+          const box=arrow?.getBoundingClientRect();
+          const meta=a.querySelector('.method-meta');
+          const metaBox=meta?.getBoundingClientRect();
+          const st=arrow?getComputedStyle(arrow):null;
+          return {href:a.getAttribute('href'),rowHeight:r.height,svgWidth:box?.width,svgHeight:box?.height,
+             fill:st?.fill,stroke:st?.stroke,display:st?.display,metaHeight:metaBox?.height,
+             arrowAttributes:arrow?.getAttribute('width')&&arrow?.getAttribute('height')&&arrow?.getAttribute('fill')==='none'&&arrow?.getAttribute('stroke')==='currentColor'};
+        }));
+        if(methodLinks.length!==3)problems.push('method navigation does not have exactly three links');
+        for(const link of methodLinks){
+          if(link.rowHeight>94)problems.push('oversized method row: '+link.rowHeight+'px');
+          if(link.svgWidth>22||link.svgHeight>22||link.svgWidth<10||link.svgHeight<10)problems.push('oversized SVG arrow: '+JSON.stringify(link));
+          if(!link.arrowAttributes)problems.push('missing inline SVG safeguards');
+          if(link.fill!=='none')problems.push('arrow unexpectedly filled: '+link.fill);
+          if(!link.href||!link.href.endsWith('.html'))problems.push('method link missing destination');
+        }
+      }
       if(path==='producao.html'){
         const labels=['artigos','livros','teses','dados','apresentacoes'];
         for(const label of labels){
@@ -119,6 +140,36 @@ try {
   await browser.close();
   await writeFile(dir+'/results.json', JSON.stringify({tested:report.length,failures,report},null,2));
 }
+
+/* WebKit renders with Safari's SVG sizing/styling rules. */
+const safari=await webkit.launch({headless:true});
+try{
+  for(const width of [390,1024,1440]){
+    const ctx=await safari.newContext({viewport:{width,height:900},deviceScaleFactor:1});
+    const page=await ctx.newPage();
+    for(const path of ['index.html','pesquisa.html']){
+      const response=await page.goto(root+'/'+path,{waitUntil:'load',timeout:30000});
+      if(!response?.ok())failures.push({browser:'webkit',width,page:path,issue:'page load failed'});
+      const samples=await page.locator('.method-list a').evaluateAll(links=>links.map(link=>{
+        const svg=link.querySelector('.link-arrow');
+        if(!svg)return {error:'svg missing'};
+        const row=link.getBoundingClientRect();
+        const a=svg.getBoundingClientRect();
+        const css=getComputedStyle(svg);
+        return {href:link.getAttribute('href'),rowHeight:row.height,width:a.width,height:a.height,fill:css.fill,stroke:css.stroke};
+      }));
+      for(const sample of samples){
+        if(sample.error||sample.rowHeight>94||sample.width>22||sample.height>22||sample.width<10||sample.height<10||sample.fill!=='none'){
+          failures.push({browser:'webkit',width,page:path,issue:'malformed method arrow',details:sample});
+        }
+      }
+      if(width===1440)await page.screenshot({path:dir+'/webkit-'+width+'-'+path.replace('.html','.png'),fullPage:true,animations:'disabled',timeout:30000});
+      console.log('WEBKIT '+width+'px '+path+' '+JSON.stringify(samples));
+    }
+    await ctx.close();
+  }
+}finally{await safari.close();}
+
 if(failures.length){
   console.error(JSON.stringify({failures},null,2));
   process.exitCode=1;

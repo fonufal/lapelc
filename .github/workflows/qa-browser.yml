@@ -15,16 +15,16 @@ permissions:
 jobs:
   browser-qa:
     runs-on: ubuntu-latest
-    timeout-minutes: 18
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Preparar navegador Chromium
+      - name: Preparar navegadores Chromium e WebKit (Safari)
         run: |
           npm install --no-save playwright@1.56.1
-          npx playwright install --with-deps chromium
+          npx playwright install --with-deps chromium webkit
       - name: Iniciar servidor local
         run: |
           python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/lapelc-http.log 2>&1 &
@@ -33,7 +33,7 @@ jobs:
             sleep 1
           done
           exit 1
-      - name: Verificar dez páginas em desktop, tablet e mobile
+      - name: Verificar páginas em Chromium e setas em WebKit
         run: node scripts/qa-browser.mjs
       - name: Guardar capturas e relatório de QA
         if: always()

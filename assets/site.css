@@ -55,7 +55,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 .btn .arrow .link-arrow,.text-link .arrow .link-arrow{width:1em;height:1em}
 .topic-list .out-link{display:inline-flex;align-items:flex-start;justify-content:center}
 .topic-list .out-link .link-arrow{width:1em;height:1em}
-.method-list .method-meta .link-arrow{width:12px;height:12px;margin-left:5px;vertical-align:-.2em}
+.method-list a{align-items:center;gap:16px;min-height:64px;padding:16px 0}
+.method-list .method-meta{display:inline-flex;align-items:center;justify-content:flex-end;gap:12px;white-space:nowrap;line-height:1.4}
+.method-list .method-meta .link-arrow{display:block;width:17px;height:17px;min-width:17px;max-width:17px;max-height:17px;margin:0;vertical-align:middle;flex:0 0 17px;stroke:#72d0ff;fill:none}
+@media(max-width:600px){.method-list a{gap:10px;min-height:56px;padding:13px 0}.method-list .method-meta{font-size:9px;gap:6px}.method-list .method-meta .link-arrow{width:15px;height:15px;min-width:15px;max-width:15px;max-height:15px;flex-basis:15px}}
 .section-link span .link-arrow,.infra-register-arrow .link-arrow{width:1em;height:1em}
 .infra-device-links a span .link-arrow{width:1.1em;height:1.1em}
 .location .link-arrow{width:1em;height:1em;vertical-align:-.1em;color:var(--cyan-text)}
