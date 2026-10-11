@@ -131,6 +131,16 @@ try {
       if(path==='contato.html'){
         if(!await page.locator('#contact-form').isVisible()) problems.push('contact form absent');
         if(!await page.locator('a[href="mailto:miguel@fale.ufal.br"]').isVisible())problems.push('contact email fallback absent');
+        const map=page.locator('iframe.contact-map-frame');
+        if(await map.count()!==1)problems.push('embedded map missing');
+        else{
+          await map.scrollIntoViewIfNeeded();
+          const meta=await map.evaluate(el=>{const r=el.getBoundingClientRect();return {width:r.width,height:r.height,source:el.getAttribute('src'),title:el.getAttribute('title')};});
+          if(meta.width<180||meta.height<200)problems.push('embedded map too small: '+JSON.stringify(meta));
+          if(!meta.source.includes('google.com/maps?')||!meta.source.includes('output=embed'))problems.push('embedded map address invalid');
+          if(!meta.title)problems.push('embedded map lacks accessibility title');
+          if(!await page.locator('.contact-map-fallback').isVisible())problems.push('map external fallback missing');
+        }
       }
       if(width===390||width===1440||(width===768&&['pesquisa.html','pessoas.html','producao.html'].includes(path))){
         await page.screenshot({path:dir+'/'+width+'-'+path.replace('.html','.png'),fullPage:true,animations:'disabled',timeout:30000});
