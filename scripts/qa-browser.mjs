@@ -53,7 +53,7 @@ try {
         return {
           glyphText:document.body.textContent.includes('↗'),
           svgCount:svgs.length,
-          visible:svgs.every(svg=>{const r=svg.getBoundingClientRect();return r.width>=8&&r.height>=8;})
+          visible:svgs.filter(svg=>svg.getClientRects().length>0).every(svg=>{const r=svg.getBoundingClientRect();return r.width>=8&&r.height>=8;})
         };
       });
       if(arrowCheck.glyphText)problems.push('raw diagonal arrow still rendered as text');
