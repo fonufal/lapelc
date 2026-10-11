@@ -16,8 +16,9 @@
 .person-rows .people-items .portrait::after{content:"";position:absolute;inset:0;background:var(--cyan);opacity:.25;mix-blend-mode:multiply;pointer-events:none}
 
 /* Acessibilidade e navegação estrutural. */
-.skip-link{position:absolute;left:16px;top:-72px;z-index:100;background:#082a49;color:#fff;padding:12px 16px;font-size:14px}
-.skip-link:focus{top:10px}
+/* Skip navigation remains outside the viewport unless the keyboard focuses it. */
+.skip-link{position:fixed;left:16px;top:12px;z-index:1000;transform:translateY(calc(-100% - 28px));background:#082a49;color:#fff;padding:12px 16px;font-size:14px}
+.skip-link:focus-visible{transform:translateY(0)}
 a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--cyan-text);outline-offset:3px}
 .eyebrow,.section-tag.blue,.language strong,.topic-list .num,.pub-list .num,.filter-row button.active,.filter-row .count{color:var(--cyan-text)}
 .hero h1 .accent,.section-title .accent{color:var(--cyan-text)}

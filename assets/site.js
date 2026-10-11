@@ -1,4 +1,14 @@
 document.addEventListener('DOMContentLoaded',()=>{
+ const skip=document.querySelector('.skip-link[href="#conteudo"]');
+ if(skip)skip.addEventListener('click',e=>{
+  const main=document.getElementById('conteudo');
+  if(!main)return;
+  e.preventDefault();
+  main.setAttribute('tabindex','-1');
+  main.focus({preventScroll:true});
+  main.scrollIntoView({block:'start'});
+  if(location.hash!=='#conteudo')history.pushState(null,'','#conteudo');
+ });
  const toggle=document.querySelector('.mobile-toggle'),nav=document.querySelector('.nav');
  function setMenu(open){
   if(!toggle||!nav)return;

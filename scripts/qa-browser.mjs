@@ -51,6 +51,17 @@ try {
       if(check.portraitOverlaps)problems.push('portrait overlap: ' + check.portraitOverlaps);
       if(check.h1 && (check.h1.x < -2 || check.h1.right>width+2))problems.push('heading beyond viewport');
       if(!check.skip)problems.push('missing skip link');
+      const skip = page.locator('a.skip-link');
+      const rectBefore=await skip.boundingBox();
+      if(rectBefore && rectBefore.y+rectBefore.height>0)problems.push('skip link visible without focus');
+      await page.keyboard.press('Tab');
+      if(!await skip.evaluate(el=>document.activeElement===el))problems.push('skip link not first keyboard focus');
+      const rectFocused=await skip.boundingBox();
+      if(!rectFocused||rectFocused.y<0)problems.push('skip link hidden under keyboard focus');
+      await page.keyboard.press('Enter');
+      if(!await page.locator('#conteudo').evaluate(el=>document.activeElement===el))problems.push('skip activation did not transfer focus');
+      const rectAfter=await skip.boundingBox();
+      if(rectAfter&&rectAfter.y+rectAfter.height>0)problems.push('skip link remained visible after activation');
       if(check.art && check.art.box.height < 100)problems.push('hero image too short');
       if(errors.length)problems.push('JavaScript error(s): ' + errors.join(' | '));
       if(width <= 1050){
