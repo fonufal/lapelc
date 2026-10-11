@@ -64,7 +64,7 @@ function localize(page,source,unknown){
  let s=source.replace('<html lang="pt-BR">','<html lang="en">');
  s=s.replace(/<meta name="description" content="[^"]*">/,'<meta name="description" content="'+meta[page]+'">');
  s=s.replace('</head>','<link rel="alternate" hreflang="pt-BR" href="https://fonufal.github.io/lapelc/'+page+'"><link rel="alternate" hreflang="en" href="https://fonufal.github.io/lapelc/en/'+routes[page]+'"></head>');
- s=s.replace('<span class="language"><strong>PT</strong> / EN</span>',
+ s=s.replace(/<span class="language"><strong aria-current="true">PT<\/strong><span aria-hidden="true"> \/ <\/span><a [^>]+>EN<\/a><\/span>/,
    '<span class="language"><a href="../'+page+'" lang="pt-BR" hreflang="pt-BR" aria-label="Versão em português">PT</a><span aria-hidden="true"> / </span><strong aria-current="true">EN</strong></span>');
  if(page==='laboratorio.html')s=s.replace('Comportamento<br>Humano.','Human<br>Behavior.');
  s=textNodes(s,page,unknown);
