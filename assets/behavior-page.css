@@ -5,21 +5,3 @@
 @media(max-width:600px) {
   .behavior-page .method-hero h1 .accent {font-size:clamp(27px,7.6vw,38px)}
 }
-
-/* Correção de título da seção de aplicações.
-   Não altera a grade nem os outros métodos ou componentes do site. */
-.behavior-page #aplicacoes .three-steps > div:first-child {
-  min-width: 0;
-}
-.behavior-page #aplicacoes .section-title.small {
-  font-size: clamp(18px, 2.65vw, 30px);
-  line-height: 1.10;
-  letter-spacing: -.055em;
-  max-width: 100%;
-  overflow-wrap: normal;
-}
-@media (max-width: 600px) {
-  .behavior-page #aplicacoes .section-title.small {
-    font-size: clamp(26px, 7vw, 34px);
-  }
-}
