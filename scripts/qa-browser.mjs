@@ -33,7 +33,10 @@ try {
           }
         }
         const art=document.querySelector('.hero-art img');
-        return {
+        const hero=document.querySelector('.hero');
+        const lastMeaningful=hero?.querySelector('.hero-main .buttons a:last-child')||hero?.querySelector('.hero-main .lead');
+        const bottomGap=hero&&lastMeaningful?hero.getBoundingClientRect().bottom-lastMeaningful.getBoundingClientRect().bottom:null;
+        return {heroBottomGap:bottomGap,heroHeight:hero?.getBoundingClientRect().height,
           overflow:doc.scrollWidth>innerWidth+2,
           scrollWidth:doc.scrollWidth,
           viewport:innerWidth,
@@ -48,6 +51,8 @@ try {
       const problems = [];
       if(!response || !response.ok())problems.push('HTTP error: ' + response?.status());
       if(check.overflow)problems.push('horizontal overflow: ' + check.scrollWidth + ' > ' + check.viewport);
+      if(width <= 600 && (check.heroBottomGap===null||check.heroBottomGap>90||check.heroBottomGap<18))
+        problems.push('mobile hero has excessive bottom whitespace: '+check.heroBottomGap+'px');
       const arrowCheck=await page.evaluate(()=>{
         const svgs=[...document.querySelectorAll('svg.link-arrow')];
         return {
@@ -165,6 +170,19 @@ try{
       }
       if(width===1440)await page.screenshot({path:dir+'/webkit-'+width+'-'+path.replace('.html','.png'),fullPage:true,animations:'disabled',timeout:30000});
       console.log('WEBKIT '+width+'px '+path+' '+JSON.stringify(samples));
+    }
+    if(width===390){
+      for(const path of pages){
+        await page.goto(root+'/'+path,{waitUntil:'domcontentloaded',timeout:30000});
+        const gap=await page.evaluate(()=>{
+          const hero=document.querySelector('.hero');
+          const content=hero?.querySelector('.hero-main .buttons a:last-child')||hero?.querySelector('.hero-main .lead');
+          if(!hero||!content)return null;
+          return hero.getBoundingClientRect().bottom-content.getBoundingClientRect().bottom;
+        });
+        if(gap===null||gap>90||gap<18) failures.push({browser:'webkit',width,page:path,issue:'mobile hero bottom whitespace',gap});
+        console.log('WEBKIT HERO '+width+'px '+path+' gap='+gap);
+      }
     }
     await ctx.close();
   }
