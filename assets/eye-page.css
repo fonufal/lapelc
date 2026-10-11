@@ -1,65 +1,13 @@
-/* Correção restrita à página de rastreamento ocular.
-   Reconstitui proporções da referência visual aprovada de 1122 px. */
+/* Apenas recuperação dos elementos gráficos de rastreamento ocular.
+   Layout (grade, dimensões, tipografia geral, ordem e espaçamentos)
+   permanece inteiramente controlado por site.css, como em eeg.html. */
+.eye-page .mini-icon svg {width:36px;height:36px;display:block;}
+/* Ajuste óptico necessário para a legenda original não ultrapassar a coluna existente. */
+.eye-page .method-hero .side-words {font-size:19px;letter-spacing:-.015em;line-height:1.36;}
+/* Enquadramento da fotografia do olho dentro da mesma área gráfica usada pelo EEG. */
 @media (min-width:851px) {
-  .eye-page .site {max-width:1122px}
-  .eye-page .method-hero {display:block;min-height:455px;height:455px;isolation:isolate;background:#f7fbfe}
-  .eye-page .method-hero .hero-main {position:absolute;z-index:4;top:0;left:0;width:510px;height:100%;padding:44px 0 25px 60px}
-  .eye-page .method-hero .eyebrow {font-size:10px;letter-spacing:1.05px;margin-bottom:50px;white-space:nowrap}
-  .eye-page .method-hero h1 {font-size:78px;line-height:.93;letter-spacing:-.058em;margin-bottom:29px;max-width:540px}
-  .eye-page .method-hero .lead {font-size:18px;line-height:1.28;max-width:370px;margin-bottom:22px;letter-spacing:-.018em}
-  .eye-page .method-hero .buttons {gap:30px;flex-wrap:nowrap}
-  .eye-page .method-hero .btn {padding:12px 24px;min-height:44px;font-size:12px}
-  .eye-page .method-hero .hero-art {position:absolute;z-index:1;display:block;inset:0;overflow:hidden;pointer-events:none}
-  .eye-page .method-hero .hero-art img {display:block;position:absolute;top:0;left:445px;width:510px;height:455px;max-width:none;opacity:1;object-fit:fill}
-  .eye-page .method-hero .hero-art:before {content:"";inset:0;position:absolute;z-index:2;pointer-events:none;background:linear-gradient(90deg,#fff 0%,#fff 35%,#ffffffec 39%,#ffffff72 46%,#ffffff00 55%,#ffffff00 79%,#f5fbfdcf 86%,#f4f9fd 93%)}
-  .eye-page .method-hero .hero-aside {position:absolute;z-index:3;right:0;top:0;width:181px;height:100%;padding:162px 43px 10px 16px;background:linear-gradient(90deg,#f5fbfc25,#f5fbfddd 40%,#f7fcfe);border:0}
-  .eye-page .method-hero .hero-aside:before {content:"";position:absolute;top:30px;bottom:55px;left:0;border-left:2px dotted #ffffffd6}
-  .eye-page .method-hero .hero-aside .side-words {font-size:13px;letter-spacing:1px;line-height:1.63;font-weight:500;margin:0 0 22px;color:#203e64}
-  .eye-page .method-hero .hero-aside .side-words + p {font-size:14px;line-height:1.4;border-top:1px solid #91a8b9;padding-top:20px;color:#4b6481;margin:0;width:145px}
-  .eye-page .method-hero .hero-aside .section-tag {display:none}
-  .eye-page .section:not(.dark) {padding:22px 60px 18px}
-  .eye-page .section .section-tag {font-size:10px;line-height:1.4;letter-spacing:1.1px}
-  .eye-page .section-title.small {font-size:40px;line-height:1.05;letter-spacing:-.045em;font-weight:500;margin:22px 0 16px}
-  .eye-page .three-steps {grid-template-columns:240px repeat(3,minmax(0,1fr));gap:28px;align-items:start}
-  .eye-page .three-steps .mini-card {padding-top:2px}
-  .eye-page .mini-icon {width:62px;height:62px;margin:0 0 12px;background:#eef6fb}
-  .eye-page .mini-icon svg {display:block;width:36px;height:36px}
-  .eye-page .mini-card h3 {font-size:15.6px;line-height:1.14;margin:11px 0 7px;font-weight:600;letter-spacing:-.018em}
-  .eye-page .mini-card p {font-size:13.3px;line-height:1.36;color:#4c6787}
-  .eye-page .section .rule {margin:16px 0;width:38px;height:2px}
-  .eye-page #aplicacoes .section-title.small {font-size:32px;line-height:1.02;letter-spacing:-.052em;width:310px;max-width:none;margin:17px 0 12px}
-  .eye-page #aplicacoes .rule {margin:16px 0 0}
-  .eye-page #aplicacoes .mini-card:nth-of-type(n+2) {border-left:1px solid #d1deea;padding-left:20px;margin-left:-20px}
-  .eye-page main > .section:nth-of-type(2) .mini-card:nth-of-type(-n+2) {position:relative}
-  .eye-page main > .section:nth-of-type(2) .mini-card:nth-of-type(-n+2)::after {content:"→";position:absolute;top:66px;right:-23px;color:#00a3ea;font-size:23px;font-weight:300}
-  .eye-page .examples {grid-template-columns:209px repeat(4,minmax(0,1fr));gap:17px}
-  .eye-page .example img {height:97px;aspect-ratio:auto;width:100%;object-fit:cover}
-  .eye-page .example h3 {font-size:12.7px;letter-spacing:-.02em;margin:9px 0 5px;line-height:1.2}
-  .eye-page .example p {font-size:12.1px;line-height:1.24;color:#506b8b}
-  .eye-page .section:has(.examples) {padding-top:17px;padding-bottom:17px}
-  .eye-page .dark {min-height:210px;padding:19px 60px 18px}
-  .eye-page .dark .section-grid {grid-template-columns:57% 43%}
-  .eye-page .dark .section-grid>div:first-child {display:grid;grid-template-columns:40% 60%;align-content:start}
-  .eye-page .dark .section-tag {grid-column:1/-1;font-size:10px}
-  .eye-page .dark .section-title {grid-column:1;grid-row:2;font-size:37px;line-height:1.03;font-weight:400;letter-spacing:-.045em;margin:18px 0 0}
-  .eye-page .dark .section-copy {grid-column:2;grid-row:2;font-size:14px;line-height:1.4;margin:23px 20px 0 0;color:#d4e3f0;max-width:300px}
-  .eye-page .dark .rule {display:none}
-  .eye-page .dark .method-list {padding-top:14px}
-  .eye-page .dark .method-list a {padding:10px 0 12px;font-size:16px;line-height:1.2}
-  .eye-page .dark .method-list .method-meta {font-size:9px;letter-spacing:1px}
-}
-@media (max-width:850px) {
-  .eye-page .hero-art.eye img {object-fit:cover;object-position:75% center}
-  .eye-page .method-hero .hero-aside {display:none}
-  .eye-page .mini-icon svg {width:36px;height:36px;display:block}
+  .eye-page .hero-art.eye img {left:-27%;opacity:.88;}
 }
 @media (max-width:600px) {
-  .eye-page .method-hero {min-height:565px}
-  .eye-page .method-hero .hero-art {left:30%;opacity:.5}
-  .eye-page .method-hero h1 br {display:block!important}
-  .eye-page .method-hero h1 {font-size:clamp(43px,10.4vw,54px);line-height:1.04;letter-spacing:-.055em}
-  .eye-page .method-hero .lead {max-width:325px}
-  .eye-page .method-hero .buttons {gap:15px}
-  .eye-page .method-hero .hero-art.eye img {object-position:72% center}
-  .eye-page .example img {width:100%;max-width:280px}
+  .eye-page .hero-art.eye img {object-position:75% center;}
 }
